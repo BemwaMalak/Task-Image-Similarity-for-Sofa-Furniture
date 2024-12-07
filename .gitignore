@@ -1,7 +1,6 @@
 .venv
 .husky
 data/sofas/cropped
-data/sofas/test
 node_modules
 package-lock.json
 package.json
