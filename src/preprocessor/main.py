@@ -29,8 +29,6 @@ class SofaSegmenter(ImagePreprocessor):
         Raises:
             ValueError: If any parameters are invalid
         """
-        if not isinstance(padding, int) or not isinstance(max_size, int) or not isinstance(iterations, int):
-            raise TypeError("All parameters must be integers")
         if padding < 0 or max_size <= 0 or iterations <= 0:
             raise ValueError("Invalid parameters: padding must be >= 0, max_size and iterations must be > 0")
         
@@ -82,16 +80,10 @@ class SofaSegmenter(ImagePreprocessor):
             np.ndarray: Initialized mask with background/foreground regions
         """
         # Initialize as probable background
-        mask = np.ones((height, width), np.uint8) * cv2.GC_PR_BGD
+        mask = np.zeros((height, width), np.uint8) + cv2.GC_PR_BGD
         
-        # Border parameters
+        # Border parameters (5% of the smaller dimension)
         border = int(min(height, width) * 0.05)
-        
-        # sofa typically occupies the central portion of the image
-        sofa_regions = {
-            'outer': {'y': (0.2, 0.8), 'x': (0.1, 0.9), 'value': cv2.GC_PR_FGD},
-            'inner': {'y': (0.3, 0.7), 'x': (0.2, 0.8), 'value': cv2.GC_FGD}
-        }
         
         # Mark borders as definite background
         mask[:border, :] = cv2.GC_BGD
@@ -99,13 +91,38 @@ class SofaSegmenter(ImagePreprocessor):
         mask[:, :border] = cv2.GC_BGD
         mask[:, -border:] = cv2.GC_BGD
         
-        # Mark sofa regions
-        for region in sofa_regions.values():
-            y_start = int(height * region['y'][0])
-            y_end = int(height * region['y'][1])
-            x_start = int(width * region['x'][0])
-            x_end = int(width * region['x'][1])
-            mask[y_start:y_end, x_start:x_end] = region['value']
+        # Mark central region as probable foreground
+        center_y, center_x = height // 2, width // 2
+        center_h = int(height * 0.6)  # 60% of height
+        center_w = int(width * 0.6)   # 60% of width
+        
+        start_y = center_y - center_h // 2
+        end_y = center_y + center_h // 2
+        start_x = center_x - center_w // 2
+        end_x = center_x + center_w // 2
+        
+        # Ensure coordinates are within bounds
+        start_y, end_y = max(0, start_y), min(height, end_y)
+        start_x, end_x = max(0, start_x), min(width, end_x)
+        
+        # Mark central region as probable foreground
+        mask[start_y:end_y, start_x:end_x] = cv2.GC_PR_FGD
+        
+        # Mark inner region as definite foreground
+        inner_h = int(center_h * 0.6)  # 60% of center height
+        inner_w = int(center_w * 0.6)  # 60% of center width
+        
+        inner_start_y = center_y - inner_h // 2
+        inner_end_y = center_y + inner_h // 2
+        inner_start_x = center_x - inner_w // 2
+        inner_end_x = center_x + inner_w // 2
+        
+        # Ensure coordinates are within bounds
+        inner_start_y, inner_end_y = max(0, inner_start_y), min(height, inner_end_y)
+        inner_start_x, inner_end_x = max(0, inner_start_x), min(width, inner_end_x)
+        
+        # Mark inner region as definite foreground
+        mask[inner_start_y:inner_end_y, inner_start_x:inner_end_x] = cv2.GC_FGD
         
         return mask
 
@@ -149,15 +166,16 @@ class SofaSegmenter(ImagePreprocessor):
             mask = self._create_initial_mask(height, width)
             
             rect = (0, 0, width, height)
+            # Initialize models
             background_model = np.zeros((1, 65), np.float64)
             foreground_model = np.zeros((1, 65), np.float64)
             
-            # Perform GrabCut segmentation
+            # Perform GrabCut segmentation using mask initialization
             cv2.grabCut(image, mask, rect, background_model, foreground_model, 
-                       self.iterations, cv2.GC_INIT_WITH_RECT)
+                       self.iterations, cv2.GC_INIT_WITH_MASK)
             
             # Create binary mask and apply it
-            binary_mask = np.where((mask == 2) | (mask == 0), 0, 1).astype('uint8')
+            binary_mask = np.where((mask == cv2.GC_PR_BGD) | (mask == cv2.GC_BGD), 0, 1).astype('uint8')
             segmented_image = cv2.bitwise_and(image, image, mask=binary_mask)
             
             bbox = self._get_bounding_box(binary_mask)
