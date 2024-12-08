@@ -1,5 +1,6 @@
 .venv
 data/sofas/processed
+data/sofas/features
 node_modules
 .pytest_cache
 __pycache__

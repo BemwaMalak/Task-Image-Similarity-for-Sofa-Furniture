@@ -1,4 +1,4 @@
-from interface import FeatureExtractor
+from .interface import FeatureExtractor
 from typing import Tuple, List
 import cv2
 import numpy as np
