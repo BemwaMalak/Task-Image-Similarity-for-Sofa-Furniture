@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 import pytest
 
-from src.preprocessor.interface import SofaSegmentationError
-from src.preprocessor.main import BoundingBox, SofaSegmenter
+from src.preprocessor import BoundingBox, SofaSegmenter
 
 
 @pytest.fixture
@@ -101,5 +100,5 @@ def test_preprocess_invalid_input(sofa_segmenter):
 def test_preprocess_corrupted_image(sofa_segmenter):
     # Create an image with invalid dimensions (2D instead of 3D)
     corrupted_image = np.zeros((100, 100), dtype=np.uint8)
-    with pytest.raises(SofaSegmentationError):
+    with pytest.raises(Exception):
         sofa_segmenter.preprocess(corrupted_image)

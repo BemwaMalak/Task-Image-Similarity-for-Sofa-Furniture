@@ -3,12 +3,6 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-class SofaSegmentationError(Exception):
-    """Custom exception for sofa segmentation errors."""
-
-    pass
-
-
 class ImagePreprocessor(ABC):
     """Abstract base class for image preprocessing operations."""
 
@@ -25,6 +19,6 @@ class ImagePreprocessor(ABC):
 
         Raises:
             ValueError: If image is None or empty
-            SofaSegmentationError: If critical processing error occurs
+            Exception: If critical processing error occurs
         """
         pass

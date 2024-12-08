@@ -5,7 +5,7 @@ from typing import Tuple
 import cv2
 import numpy as np
 
-from .interface import ImagePreprocessor, SofaSegmentationError
+from .interface import ImagePreprocessor
 
 
 @dataclass
@@ -73,7 +73,7 @@ class SofaSegmenter(ImagePreprocessor):
                 return resized, scale
             except cv2.error as e:
                 self.logger.error(f"Failed to resize image: {e}")
-                raise SofaSegmentationError(f"Image resizing failed: {e}")
+                raise Exception(f"Image resizing failed: {e}")
         return image, 1.0
 
     def _create_initial_mask(self, height: int, width: int) -> np.ndarray:
@@ -163,7 +163,7 @@ class SofaSegmenter(ImagePreprocessor):
             Tuple[np.ndarray, BoundingBox]: (Segmented image, bounding box)
 
         Raises:
-            SofaSegmentationError: If segmentation fails
+            Exception: If segmentation fails
             ValueError: If input image is invalid
         """
         if image is None or image.size == 0:
@@ -200,10 +200,10 @@ class SofaSegmenter(ImagePreprocessor):
 
         except cv2.error as e:
             self.logger.error(f"GrabCut segmentation failed: {e}")
-            raise SofaSegmentationError(f"Sofa segmentation failed: {e}")
+            raise Exception(f"Sofa segmentation failed: {e}")
         except Exception as e:
             self.logger.error(f"Unexpected error during segmentation: {e}")
-            raise SofaSegmentationError(f"Unexpected error during segmentation: {e}")
+            raise Exception(f"Unexpected error during segmentation: {e}")
 
     def preprocess(self, image: np.ndarray) -> np.ndarray:
         """
@@ -216,7 +216,7 @@ class SofaSegmenter(ImagePreprocessor):
             np.ndarray: Processed image with background removed and cropped
 
         Raises:
-            SofaSegmentationError: If critical processing error occurs
+            Exception: If critical processing error occurs
         """
         try:
             if image is None or image.size == 0:
@@ -255,13 +255,10 @@ class SofaSegmenter(ImagePreprocessor):
             result = segmented_image[y : y + h, x : x + w]
 
             if result.size == 0:
-                raise SofaSegmentationError("Resulting image is empty after processing")
+                raise Exception("Resulting image is empty after processing")
 
             return result
 
-        except (ValueError, SofaSegmentationError) as e:
+        except (ValueError, Exception) as e:
             self.logger.error(f"Failed to preprocess image: {e}")
             raise
-        except Exception as e:
-            self.logger.error(f"Unexpected error during preprocessing: {e}")
-            raise SofaSegmentationError(f"Unexpected error during preprocessing: {e}")
