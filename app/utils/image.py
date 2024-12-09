@@ -1,8 +1,10 @@
+from typing import Optional
 import cv2
 import numpy as np
+from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 
-def process_uploaded_image(upload):
+def process_uploaded_image(upload: Optional[UploadedFile]) -> Optional[np.ndarray]:
     """Convert uploaded image to numpy array.
 
     Args:
