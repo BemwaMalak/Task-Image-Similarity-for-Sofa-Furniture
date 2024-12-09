@@ -165,7 +165,3 @@ test(preprocessor): add unit tests for image segmentation
 2. Update documentation if needed
 3. Run isort and black in the root directory to ensure proper formatting (PEP8)
 4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
