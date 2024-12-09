@@ -8,9 +8,7 @@ class IFeatureExtractor(ABC):
     """Abstract base class for feature extractors."""
 
     @abstractmethod
-    def extract_features(
-        self, image: np.ndarray
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    def extract_features(self, image: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
         Extract features from an image.
 

@@ -1,11 +1,12 @@
 import os
-import numpy as np
 from typing import Tuple
 
-from src.feature_extractor import ColorHistogramExtractor
-from src.db.repos import ProductRepository
-from src.db.models import Product
+import numpy as np
+
 from app.config import HIST_BINS, ROOT_DIR
+from src.db.models import Product
+from src.db.repos import ProductRepository
+from src.feature_extractor import ColorHistogramExtractor
 
 
 class SimilarityService:
@@ -46,8 +47,7 @@ class SimilarityService:
             raise Exception(f"Failed to extract features: {str(e)}")
 
     def find_most_similar(
-        self,
-        query_features: Tuple[np.ndarray, np.ndarray]
+        self, query_features: Tuple[np.ndarray, np.ndarray]
     ) -> Tuple[Product | None, float]:
         """
         Find the most similar product based on image features.
@@ -71,25 +71,32 @@ class SimilarityService:
             product_features = []
             valid_products = []
             for product in products:
-                if product.features_file_path is not None and os.path.exists(os.path.join(ROOT_DIR, str(product.features_file_path))):
+                if product.features_file_path is not None and os.path.exists(
+                    os.path.join(ROOT_DIR, str(product.features_file_path))
+                ):
                     try:
                         # Load features from npz file
-                        data = np.load(os.path.join(ROOT_DIR, str(product.features_file_path)), allow_pickle=True)
-                        features = (np.array(data['keypoints']), np.array(data['descriptors']))
+                        data = np.load(
+                            os.path.join(ROOT_DIR, str(product.features_file_path)),
+                            allow_pickle=True,
+                        )
+                        features = (
+                            np.array(data["keypoints"]),
+                            np.array(data["descriptors"]),
+                        )
                         product_features.append(features)
                         valid_products.append(product)
                     except Exception:
                         continue
-            
+
             if not product_features:
                 return None, 0.0
-            
+
             # Use feature extractor to find most similar product
             best_idx, similarity = self.feature_extractor.find_most_similar(
-                query_features,
-                product_features
+                query_features, product_features
             )
-            
+
             return valid_products[best_idx], similarity
 
         except Exception as e:

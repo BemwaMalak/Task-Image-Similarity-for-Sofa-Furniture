@@ -117,10 +117,18 @@ def run_tests(args):
         return e.returncode
 
 
+def run_app(args):
+    """Run the Streamlit app."""
+    try:
+        subprocess.run(["streamlit", "run", "app/main.py"], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to run Streamlit app: {e}")
+        sys.exit(1)
+
+
 def main():
-    parser = argparse.ArgumentParser(
-        description="Task Image Similarity Management Tool"
-    )
+    """Main entry point."""
+    parser = argparse.ArgumentParser(description="Manage the sofa similarity search application")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Test command
@@ -138,12 +146,17 @@ def main():
         "init-db", help="Initialize database with sofa products"
     )
 
+    # Run App command
+    app_parser = subparsers.add_parser("run-app", help="Run the Streamlit app")
+
     args = parser.parse_args()
 
     if args.command == "test":
         sys.exit(run_tests(args))
     elif args.command == "init-db":
         init_db(args)
+    elif args.command == "run-app":
+        run_app(args)
     else:
         parser.print_help()
         sys.exit(1)
