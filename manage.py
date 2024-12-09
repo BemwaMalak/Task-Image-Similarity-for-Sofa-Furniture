@@ -126,6 +126,26 @@ def run_app(args):
         sys.exit(1)
 
 
+def open_docs(args):
+    """Open the documentation in the default web browser."""
+    import webbrowser
+    from pathlib import Path
+
+    docs_path = Path("docs/_build/html/index.html")
+    
+    if not docs_path.exists():
+        print("Documentation not found. Building documentation first...")
+        try:
+            subprocess.run(["sphinx-build", "-b", "html", "docs", "docs/_build/html"], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to build documentation: {e}")
+            sys.exit(1)
+
+    doc_url = f"file://{docs_path.resolve()}"
+    print(f"Opening documentation at: {doc_url}")
+    webbrowser.open(doc_url)
+
+
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
@@ -151,6 +171,9 @@ def main():
     # Run App command
     app_parser = subparsers.add_parser("run-app", help="Run the Streamlit app")
 
+    # Docs command
+    docs_parser = subparsers.add_parser("docs", help="Open documentation in browser")
+
     args = parser.parse_args()
 
     if args.command == "test":
@@ -159,6 +182,8 @@ def main():
         init_db(args)
     elif args.command == "run-app":
         run_app(args)
+    elif args.command == "docs":
+        open_docs(args)
     else:
         parser.print_help()
         sys.exit(1)
