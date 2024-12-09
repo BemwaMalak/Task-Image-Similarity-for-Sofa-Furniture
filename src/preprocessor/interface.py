@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 
-class ImagePreprocessor(ABC):
+class IPreprocessor(ABC):
     """Abstract base class for image preprocessing operations."""
 
     @abstractmethod

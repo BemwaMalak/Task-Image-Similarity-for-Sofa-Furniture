@@ -4,12 +4,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
 
-from .interface import DatabaseProvider
+from .interface import IDatabaseProvider
 
 Base = declarative_base()
 
 
-class SQLiteDatabaseProvider(DatabaseProvider):
+class SQLiteDatabaseProvider(IDatabaseProvider):
     def __init__(self, database_url: str = "sqlite:///./products.db"):
         self.database_url = database_url
         self.engine = create_engine(
@@ -38,12 +38,12 @@ class SQLiteDatabaseProvider(DatabaseProvider):
 
 
 # Singleton instance
-_db_provider: Optional[DatabaseProvider] = None
+_db_provider: Optional[IDatabaseProvider] = None
 
 
 def get_database_provider(
     database_url: str = "sqlite:///./products.db",
-) -> DatabaseProvider:
+) -> IDatabaseProvider:
     """Get the singleton instance of the database provider"""
     global _db_provider
     if _db_provider is None:

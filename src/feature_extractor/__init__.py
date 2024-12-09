@@ -1,3 +1,3 @@
-from .main import ColorHistogramExtractor, FeatureExtractor
+from .main import ColorHistogramExtractor, IFeatureExtractor
 
-__all__ = ["ColorHistogramExtractor", "FeatureExtractor"]
+__all__ = ["ColorHistogramExtractor", "IFeatureExtractor"]

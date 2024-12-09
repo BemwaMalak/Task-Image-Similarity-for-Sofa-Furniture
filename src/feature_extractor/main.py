@@ -3,10 +3,10 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-from .interface import FeatureExtractor
+from .interface import IFeatureExtractor
 
 
-class ColorHistogramExtractor(FeatureExtractor):
+class ColorHistogramExtractor(IFeatureExtractor):
     """Color Histogram and Texture feature extractor implementation."""
 
     def __init__(self, hist_bins=32):

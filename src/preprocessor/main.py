@@ -5,7 +5,7 @@ from typing import Tuple
 import cv2
 import numpy as np
 
-from .interface import ImagePreprocessor
+from .interface import IPreprocessor
 
 
 @dataclass
@@ -18,7 +18,7 @@ class BoundingBox:
     height: int
 
 
-class SofaSegmenter(ImagePreprocessor):
+class SofaSegmenter(IPreprocessor):
     """Sofa segmentation and background removal using GrabCut algorithm."""
 
     def __init__(self, padding: int = 10, max_size: int = 800, iterations: int = 1):

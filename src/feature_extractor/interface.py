@@ -4,7 +4,7 @@ from typing import List, Tuple
 import numpy as np
 
 
-class FeatureExtractor(ABC):
+class IFeatureExtractor(ABC):
     """Abstract base class for feature extractors."""
 
     @abstractmethod

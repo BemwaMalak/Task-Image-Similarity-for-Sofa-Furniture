@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from sqlalchemy.orm import Session
 
 
-class DatabaseProvider(ABC):
+class IDatabaseProvider(ABC):
     @abstractmethod
     def initialize_database(self) -> None:
         """Initialize the database and create all tables"""

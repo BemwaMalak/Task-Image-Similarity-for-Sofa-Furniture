@@ -1,7 +1,7 @@
-from .main import BoundingBox, ImagePreprocessor, SofaSegmenter
+from .main import BoundingBox, IPreprocessor, SofaSegmenter
 
 __all__ = [
     "SofaSegmenter",
-    "ImagePreprocessor",
+    "IPreprocessor",
     "BoundingBox",
 ]
