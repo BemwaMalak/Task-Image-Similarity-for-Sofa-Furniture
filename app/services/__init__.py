@@ -1,7 +1,9 @@
-from .preprocessor import PreprocessorService
-from .similarity import SimilarityService
+from .preprocessor import IPreprocessorService, PreprocessorService
+from .similarity import ISimilarityService, SimilarityService
 
 __all__ = [
     "PreprocessorService",
     "SimilarityService",
+    "IPreprocessorService",
+    "ISimilarityService",
 ]

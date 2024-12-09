@@ -1,13 +1,14 @@
 import sys
 
 import cv2
-import numpy as np
 import streamlit as st
 from config import DATABASE_URL, ROOT_DIR
 
 sys.path.append(ROOT_DIR)
 
-from app.services import PreprocessorService, SimilarityService
+from services import PreprocessorService, SimilarityService
+from utils.image import process_uploaded_image
+
 from src.db.provider import get_database_provider
 from src.db.repos import ProductRepository
 
@@ -20,24 +21,6 @@ def init_services():
     preprocessor_service = PreprocessorService()
     similarity_service = SimilarityService(product_repo)
     return preprocessor_service, similarity_service
-
-
-def process_uploaded_image(upload):
-    """Convert uploaded image to numpy array.
-
-    Args:
-        upload: Streamlit UploadedFile object
-
-    Returns:
-        numpy.ndarray: Image as a numpy array in BGR format
-    """
-    if upload is None:
-        return None
-
-    # Read uploaded image
-    file_bytes = np.asarray(bytearray(upload.read()), dtype=np.uint8)
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-    return img
 
 
 def find_similar_sofa(image, preprocessor_service, similarity_service):

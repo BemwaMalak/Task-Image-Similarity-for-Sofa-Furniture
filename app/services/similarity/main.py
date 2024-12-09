@@ -5,12 +5,14 @@ import numpy as np
 
 from app.config import HIST_BINS, ROOT_DIR
 from src.db.models import Product
-from src.db.repos import ProductRepository
+from src.db.repos import IProductRepository
 from src.feature_extractor import ColorHistogramExtractor
 
+from .interface import ISimilarityService
 
-class SimilarityService:
-    def __init__(self, product_repo: ProductRepository):
+
+class SimilarityService(ISimilarityService):
+    def __init__(self, product_repo: IProductRepository):
         """
         Initialize the similarity service.
 
@@ -39,7 +41,6 @@ class SimilarityService:
             Exception: If feature extraction fails
         """
         try:
-            # Extract features
             features = self.feature_extractor.extract_features(image)
             return features
 
@@ -71,13 +72,14 @@ class SimilarityService:
             product_features = []
             valid_products = []
             for product in products:
-                if product.features_file_path is not None and os.path.exists(
-                    os.path.join(ROOT_DIR, str(product.features_file_path))
-                ):
+                product_features_path = os.path.join(
+                    ROOT_DIR, str(product.features_file_path)
+                )
+                if os.path.exists(product_features_path):
                     try:
                         # Load features from npz file
                         data = np.load(
-                            os.path.join(ROOT_DIR, str(product.features_file_path)),
+                            product_features_path,
                             allow_pickle=True,
                         )
                         features = (

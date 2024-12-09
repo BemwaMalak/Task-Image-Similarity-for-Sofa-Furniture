@@ -128,7 +128,9 @@ def run_app(args):
 
 def main():
     """Main entry point."""
-    parser = argparse.ArgumentParser(description="Manage the sofa similarity search application")
+    parser = argparse.ArgumentParser(
+        description="Manage the sofa similarity search application"
+    )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Test command

@@ -3,8 +3,10 @@ import numpy as np
 from app.config import GRABCUT_ITERATIONS, MAX_IMAGE_SIZE, PADDING
 from src.preprocessor import SofaSegmenter
 
+from .interface import IPreprocessorService
 
-class PreprocessorService:
+
+class PreprocessorService(IPreprocessorService):
     def __init__(self):
         """Initialize the preprocessor service with SofaSegmenter."""
         self.preprocessor = SofaSegmenter(
