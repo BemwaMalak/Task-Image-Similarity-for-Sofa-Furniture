@@ -132,11 +132,13 @@ def open_docs(args):
     from pathlib import Path
 
     docs_path = Path("docs/_build/html/index.html")
-    
+
     if not docs_path.exists():
         print("Documentation not found. Building documentation first...")
         try:
-            subprocess.run(["sphinx-build", "-b", "html", "docs", "docs/_build/html"], check=True)
+            subprocess.run(
+                ["sphinx-build", "-b", "html", "docs", "docs/_build/html"], check=True
+            )
         except subprocess.CalledProcessError as e:
             print(f"Failed to build documentation: {e}")
             sys.exit(1)

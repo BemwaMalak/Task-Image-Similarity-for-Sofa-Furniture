@@ -4,7 +4,7 @@ from typing import Any, Optional, Tuple
 import cv2
 import numpy as np
 import streamlit as st
-from app.config import DATABASE_URL, ROOT_DIR
+from config import DATABASE_URL, ROOT_DIR
 
 sys.path.append(ROOT_DIR)
 
@@ -15,7 +15,6 @@ from app.services import (
     SimilarityService,
 )
 from app.utils.image import process_uploaded_image
-
 from src.db.models import Product
 from src.db.provider import get_database_provider
 from src.db.repos import ProductRepository
