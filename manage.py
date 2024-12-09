@@ -73,8 +73,8 @@ def init_db(args):
                 features_path = features_dir / f"{image_path.stem}.npz"
                 np.savez_compressed(
                     features_path,
-                    keypoints=color_features if len(color_features) > 0 else [],
-                    descriptors=descriptors if descriptors is not None else [],
+                    keypoints=color_features,
+                    descriptors=descriptors,
                 )
 
                 # Create product in database

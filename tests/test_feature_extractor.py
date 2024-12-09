@@ -34,15 +34,13 @@ def test_init_invalid_parameters():
 def test_extract_features_valid_image(feature_extractor, sample_image):
     keypoints, descriptors = feature_extractor.extract_features(sample_image)
 
-    # Check return types and shapes
-    assert isinstance(keypoints, list)
-    assert len(keypoints) == 1
-    assert isinstance(keypoints[0], np.ndarray)
+    # Check return types
+    assert isinstance(keypoints, np.ndarray)
     assert isinstance(descriptors, np.ndarray)
 
     # Check histogram dimensions
     expected_hist_size = feature_extractor.hist_bins * 3  # H, S, V channels
-    assert keypoints[0].shape == (expected_hist_size, 1)
+    assert keypoints.shape == (expected_hist_size, 1)
 
 
 def test_extract_features_invalid_input(feature_extractor):
@@ -70,8 +68,8 @@ def test_compute_similarity_matrix(feature_extractor, sample_image):
 
     # Create a list of feature tuples
     features_list = [
-        (features1[0][0], features1[1]),  # (color_hist, texture_features)
-        (features2[0][0], features2[1]),  # (color_hist, texture_features)
+        (features1[0], features1[1]),  # (color_hist, texture_features)
+        (features2[0], features2[1]),  # (color_hist, texture_features)
     ]
 
     similarity_matrix = feature_extractor.compute_similarity_matrix(features_list)
@@ -100,8 +98,8 @@ def test_compute_pair_similarity(feature_extractor, sample_image):
     features2 = feature_extractor.extract_features(sample_image)
 
     # Create feature tuples
-    feature_tuple1 = (features1[0][0], features1[1])  # (color_hist, texture_features)
-    feature_tuple2 = (features2[0][0], features2[1])  # (color_hist, texture_features)
+    feature_tuple1 = (features1[0], features1[1])  # (color_hist, texture_features)
+    feature_tuple2 = (features2[0], features2[1])  # (color_hist, texture_features)
 
     similarity = feature_extractor._compute_pair_similarity(
         feature_tuple1, feature_tuple2
@@ -123,18 +121,18 @@ def test_compute_pair_similarity_invalid_input(feature_extractor):
 def test_find_most_similar(feature_extractor, sample_image):
     # Create a database with three images: original, modified, and very different
     features1 = feature_extractor.extract_features(sample_image)
-    feature_tuple1 = (features1[0][0], features1[1])
+    feature_tuple1 = (features1[0], features1[1])
 
     # Slightly modified image
     modified_image = sample_image.copy()
     modified_image[0:25, 0:25] = [128, 128, 128]
     features2 = feature_extractor.extract_features(modified_image)
-    feature_tuple2 = (features2[0][0], features2[1])
+    feature_tuple2 = (features2[0], features2[1])
 
     # Very different image
     different_image = np.full_like(sample_image, 255)  # White image
     features3 = feature_extractor.extract_features(different_image)
-    feature_tuple3 = (features3[0][0], features3[1])
+    feature_tuple3 = (features3[0], features3[1])
 
     database_features = [feature_tuple1, feature_tuple2, feature_tuple3]
 
@@ -160,36 +158,36 @@ def test_find_most_similar_invalid_input(feature_extractor):
 
 def test_glcm_calculation(feature_extractor, sample_image):
     gray_image = cv2.cvtColor(sample_image, cv2.COLOR_BGR2GRAY)
-    glcm = feature_extractor._calculate_glcm(gray_image)
+    glcm = feature_extractor._compute_glcm(gray_image)
 
     assert isinstance(glcm, np.ndarray)
-    assert glcm.shape == (8, 8)  # 8 levels as defined in the method
+    assert glcm.shape == (32, 32)
     assert np.isclose(np.sum(glcm), 1.0)  # GLCM should be normalized
 
 
 def test_glcm_calculation_invalid_input(feature_extractor):
     with pytest.raises(TypeError, match="gray_image must be a numpy array"):
-        feature_extractor._calculate_glcm(None)
+        feature_extractor._compute_glcm(None)
 
     with pytest.raises(ValueError, match="gray_image must be a 2D array"):
-        feature_extractor._calculate_glcm(np.zeros((100, 100, 3)))
+        feature_extractor._compute_glcm(np.zeros((100, 100, 3)))
 
 
 def test_glcm_features(feature_extractor, sample_image):
     gray_image = cv2.cvtColor(sample_image, cv2.COLOR_BGR2GRAY)
-    glcm = feature_extractor._calculate_glcm(gray_image)
-    features = feature_extractor._extract_glcm_features(glcm)
+    glcm = feature_extractor._compute_glcm(gray_image)
+    features = feature_extractor._compute_glcm_features(glcm)
 
     assert isinstance(features, np.ndarray)
     assert features.shape == (
-        4,
-    )  # 4 features: contrast, homogeneity, energy, correlation
+        5,
+    )  # 5 features: contrast, homogeneity, energy, correlation, homogeneity
     assert np.all(features >= 0)  # All features should be non-negative
 
 
 def test_glcm_features_invalid_input(feature_extractor):
     with pytest.raises(TypeError, match="GLCM must be a numpy array"):
-        feature_extractor._extract_glcm_features(None)
+        feature_extractor._compute_glcm_features(None)
 
     with pytest.raises(ValueError, match="GLCM must be a square 2D array"):
-        feature_extractor._extract_glcm_features(np.zeros((8, 7)))
+        feature_extractor._compute_glcm_features(np.zeros((8, 7)))

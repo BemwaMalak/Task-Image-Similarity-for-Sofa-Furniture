@@ -10,7 +10,7 @@ class IFeatureExtractor(ABC):
     @abstractmethod
     def extract_features(
         self, image: np.ndarray
-    ) -> Tuple[List[np.ndarray], np.ndarray]:
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Extract features from an image.
 
