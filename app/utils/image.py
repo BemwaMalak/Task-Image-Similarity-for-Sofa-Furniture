@@ -1,4 +1,5 @@
 from typing import Optional
+
 import cv2
 import numpy as np
 from streamlit.runtime.uploaded_file_manager import UploadedFile

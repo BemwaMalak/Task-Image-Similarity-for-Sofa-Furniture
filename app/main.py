@@ -1,23 +1,24 @@
 import sys
-from typing import Optional, Tuple, Any
+from typing import Any, Optional, Tuple
 
 import cv2
 import numpy as np
 import streamlit as st
-from config import DATABASE_URL, ROOT_DIR
+from app.config import DATABASE_URL, ROOT_DIR
 
 sys.path.append(ROOT_DIR)
 
-from services import (
+from app.services import (
     IPreprocessorService,
     ISimilarityService,
     PreprocessorService,
     SimilarityService,
 )
+from app.utils.image import process_uploaded_image
+
 from src.db.models import Product
 from src.db.provider import get_database_provider
 from src.db.repos import ProductRepository
-from utils.image import process_uploaded_image
 
 
 class SofaSimilarityApp:
@@ -106,7 +107,7 @@ class SofaSimilarityApp:
         if img is None:
             st.error("Failed to process uploaded image.")
             return
-            
+
         processed_img, similar_product = self.find_similar_sofa(img)
 
         if processed_img is None or similar_product is None:

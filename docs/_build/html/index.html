@@ -1,0 +1,987 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sofa Similarity Search Documentation &mdash; Sofa Similarity Search 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8d563738"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Sofa Similarity Search
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Sofa Similarity Search Documentation</a></li>
+<li><a class="reference internal" href="#core-components">Core Components</a><ul>
+<li><a class="reference internal" href="#module-app.main">Main Application</a><ul>
+<li><a class="reference internal" href="#app.main.SofaSimilarityApp"><code class="docutils literal notranslate"><span class="pre">SofaSimilarityApp</span></code></a><ul>
+<li><a class="reference internal" href="#app.main.SofaSimilarityApp.__init__"><code class="docutils literal notranslate"><span class="pre">SofaSimilarityApp.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#app.main.SofaSimilarityApp.display_similar_product"><code class="docutils literal notranslate"><span class="pre">SofaSimilarityApp.display_similar_product()</span></code></a></li>
+<li><a class="reference internal" href="#app.main.SofaSimilarityApp.find_similar_sofa"><code class="docutils literal notranslate"><span class="pre">SofaSimilarityApp.find_similar_sofa()</span></code></a></li>
+<li><a class="reference internal" href="#app.main.SofaSimilarityApp.run"><code class="docutils literal notranslate"><span class="pre">SofaSimilarityApp.run()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#app.main.init_services"><code class="docutils literal notranslate"><span class="pre">init_services()</span></code></a></li>
+<li><a class="reference internal" href="#app.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#services">Services</a><ul>
+<li><a class="reference internal" href="#module-app.services.preprocessor.main">Preprocessor Service</a><ul>
+<li><a class="reference internal" href="#app.services.preprocessor.main.PreprocessorService"><code class="docutils literal notranslate"><span class="pre">PreprocessorService</span></code></a><ul>
+<li><a class="reference internal" href="#app.services.preprocessor.main.PreprocessorService.__init__"><code class="docutils literal notranslate"><span class="pre">PreprocessorService.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#app.services.preprocessor.main.PreprocessorService.preprocess_image"><code class="docutils literal notranslate"><span class="pre">PreprocessorService.preprocess_image()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService"><code class="docutils literal notranslate"><span class="pre">IPreprocessorService</span></code></a><ul>
+<li><a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService.preprocess_image"><code class="docutils literal notranslate"><span class="pre">IPreprocessorService.preprocess_image()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-app.services.similarity.main">Similarity Service</a><ul>
+<li><a class="reference internal" href="#app.services.similarity.main.SimilarityService"><code class="docutils literal notranslate"><span class="pre">SimilarityService</span></code></a><ul>
+<li><a class="reference internal" href="#app.services.similarity.main.SimilarityService.__init__"><code class="docutils literal notranslate"><span class="pre">SimilarityService.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#app.services.similarity.main.SimilarityService.extract_features"><code class="docutils literal notranslate"><span class="pre">SimilarityService.extract_features()</span></code></a></li>
+<li><a class="reference internal" href="#app.services.similarity.main.SimilarityService.find_most_similar"><code class="docutils literal notranslate"><span class="pre">SimilarityService.find_most_similar()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService"><code class="docutils literal notranslate"><span class="pre">ISimilarityService</span></code></a><ul>
+<li><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService.extract_features"><code class="docutils literal notranslate"><span class="pre">ISimilarityService.extract_features()</span></code></a></li>
+<li><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService.find_most_similar"><code class="docutils literal notranslate"><span class="pre">ISimilarityService.find_most_similar()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#core-processing">Core Processing</a><ul>
+<li><a class="reference internal" href="#module-app.utils.image">Image Processing</a><ul>
+<li><a class="reference internal" href="#app.utils.image.process_uploaded_image"><code class="docutils literal notranslate"><span class="pre">process_uploaded_image()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.BoundingBox"><code class="docutils literal notranslate"><span class="pre">BoundingBox</span></code></a><ul>
+<li><a class="reference internal" href="#src.preprocessor.main.BoundingBox.height"><code class="docutils literal notranslate"><span class="pre">BoundingBox.height</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.BoundingBox.width"><code class="docutils literal notranslate"><span class="pre">BoundingBox.width</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.BoundingBox.x"><code class="docutils literal notranslate"><span class="pre">BoundingBox.x</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.BoundingBox.y"><code class="docutils literal notranslate"><span class="pre">BoundingBox.y</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter</span></code></a><ul>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter.__init__"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter._create_initial_mask"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter._create_initial_mask()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter._get_bounding_box"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter._get_bounding_box()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter._resize_image"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter._resize_image()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter._segment_sofa"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter._segment_sofa()</span></code></a></li>
+<li><a class="reference internal" href="#src.preprocessor.main.SofaSegmenter.preprocess"><code class="docutils literal notranslate"><span class="pre">SofaSegmenter.preprocess()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.feature_extractor.main">Feature Extraction</a><ul>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor</span></code></a><ul>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_glcm"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor._compute_glcm()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_glcm_features"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor._compute_glcm_features()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_pair_similarity"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor._compute_pair_similarity()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor._cosine_similarity"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor._cosine_similarity()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor.compute_similarity_matrix"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor.compute_similarity_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor.extract_features"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor.extract_features()</span></code></a></li>
+<li><a class="reference internal" href="#src.feature_extractor.main.ColorHistogramExtractor.find_most_similar"><code class="docutils literal notranslate"><span class="pre">ColorHistogramExtractor.find_most_similar()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#database-layer">Database Layer</a><ul>
+<li><a class="reference internal" href="#module-src.db.models.product">Models</a><ul>
+<li><a class="reference internal" href="#src.db.models.product.Product"><code class="docutils literal notranslate"><span class="pre">Product</span></code></a><ul>
+<li><a class="reference internal" href="#src.db.models.product.Product.created_at"><code class="docutils literal notranslate"><span class="pre">Product.created_at</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.description"><code class="docutils literal notranslate"><span class="pre">Product.description</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.features_file_path"><code class="docutils literal notranslate"><span class="pre">Product.features_file_path</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.name"><code class="docutils literal notranslate"><span class="pre">Product.name</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.processed_file_path"><code class="docutils literal notranslate"><span class="pre">Product.processed_file_path</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.product_id"><code class="docutils literal notranslate"><span class="pre">Product.product_id</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.raw_file_path"><code class="docutils literal notranslate"><span class="pre">Product.raw_file_path</span></code></a></li>
+<li><a class="reference internal" href="#src.db.models.product.Product.updated_at"><code class="docutils literal notranslate"><span class="pre">Product.updated_at</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.db.repos.product.product">Repositories</a><ul>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository"><code class="docutils literal notranslate"><span class="pre">ProductRepository</span></code></a><ul>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.create"><code class="docutils literal notranslate"><span class="pre">ProductRepository.create()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.delete"><code class="docutils literal notranslate"><span class="pre">ProductRepository.delete()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.get_all"><code class="docutils literal notranslate"><span class="pre">ProductRepository.get_all()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">ProductRepository.get_by_id()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.get_by_name"><code class="docutils literal notranslate"><span class="pre">ProductRepository.get_by_name()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.repos.product.product.ProductRepository.update"><code class="docutils literal notranslate"><span class="pre">ProductRepository.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.db.provider.main">Database Provider</a><ul>
+<li><a class="reference internal" href="#src.db.provider.main.SQLiteDatabaseProvider"><code class="docutils literal notranslate"><span class="pre">SQLiteDatabaseProvider</span></code></a><ul>
+<li><a class="reference internal" href="#src.db.provider.main.SQLiteDatabaseProvider.close_session"><code class="docutils literal notranslate"><span class="pre">SQLiteDatabaseProvider.close_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.provider.main.SQLiteDatabaseProvider.get_session"><code class="docutils literal notranslate"><span class="pre">SQLiteDatabaseProvider.get_session()</span></code></a></li>
+<li><a class="reference internal" href="#src.db.provider.main.SQLiteDatabaseProvider.initialize_database"><code class="docutils literal notranslate"><span class="pre">SQLiteDatabaseProvider.initialize_database()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.db.provider.main.get_database_provider"><code class="docutils literal notranslate"><span class="pre">get_database_provider()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Sofa Similarity Search</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sofa Similarity Search Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sofa-similarity-search-documentation">
+<h1>Sofa Similarity Search Documentation<a class="headerlink" href="#sofa-similarity-search-documentation" title="Link to this heading"></a></h1>
+<p>Welcome to the Sofa Similarity Search documentation. This application helps users find similar sofas based on image comparison using computer vision techniques.</p>
+</section>
+<section id="core-components">
+<h1>Core Components<a class="headerlink" href="#core-components" title="Link to this heading"></a></h1>
+<section id="module-app.main">
+<span id="main-application"></span><h2>Main Application<a class="headerlink" href="#module-app.main" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.main.SofaSimilarityApp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.main.</span></span><span class="sig-name descname"><span class="pre">SofaSimilarityApp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessor_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService" title="app.services.preprocessor.interface.IPreprocessorService"><span class="pre">IPreprocessorService</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService" title="app.services.similarity.interface.ISimilarityService"><span class="pre">ISimilarityService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/main.html#SofaSimilarityApp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.SofaSimilarityApp" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Main application class for Sofa Similarity Search.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.main.SofaSimilarityApp.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocessor_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService" title="app.services.preprocessor.interface.IPreprocessorService"><span class="pre">IPreprocessorService</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService" title="app.services.similarity.interface.ISimilarityService"><span class="pre">ISimilarityService</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/main.html#SofaSimilarityApp.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.SofaSimilarityApp.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the application with required services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preprocessor_service</strong> – Service for preprocessing images</p></li>
+<li><p><strong>similarity_service</strong> – Service for finding similar sofas</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.main.SofaSimilarityApp.display_similar_product">
+<span class="sig-name descname"><span class="pre">display_similar_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">col1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">col2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/app/main.html#SofaSimilarityApp.display_similar_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.SofaSimilarityApp.display_similar_product" title="Link to this definition"></a></dt>
+<dd><p>Display the similar product information in the UI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>product</strong> – Product to display</p></li>
+<li><p><strong>similarity</strong> – Similarity score</p></li>
+<li><p><strong>col1</strong> – First column for image</p></li>
+<li><p><strong>col2</strong> – Second column for details</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.main.SofaSimilarityApp.find_similar_sofa">
+<span class="sig-name descname"><span class="pre">find_similar_sofa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/main.html#SofaSimilarityApp.find_similar_sofa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.SofaSimilarityApp.find_similar_sofa" title="Link to this definition"></a></dt>
+<dd><p>Process an image and find similar sofas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image in BGR format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (processed_image, (similar_product, similarity_score))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.main.SofaSimilarityApp.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/app/main.html#SofaSimilarityApp.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.SofaSimilarityApp.run" title="Link to this definition"></a></dt>
+<dd><p>Run the Streamlit application.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.main.init_services">
+<span class="sig-prename descclassname"><span class="pre">app.main.</span></span><span class="sig-name descname"><span class="pre">init_services</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService" title="app.services.preprocessor.interface.IPreprocessorService"><span class="pre">IPreprocessorService</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#app.services.similarity.interface.ISimilarityService" title="app.services.similarity.interface.ISimilarityService"><span class="pre">ISimilarityService</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/main.html#init_services"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.init_services" title="Link to this definition"></a></dt>
+<dd><p>Initialize application services.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of (preprocessor_service, similarity_service)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.main.main">
+<span class="sig-prename descclassname"><span class="pre">app.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/app/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.main.main" title="Link to this definition"></a></dt>
+<dd><p>Main entry point of the application.</p>
+</dd></dl>
+
+</section>
+<section id="services">
+<h2>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h2>
+<section id="module-app.services.preprocessor.main">
+<span id="preprocessor-service"></span><h3>Preprocessor Service<a class="headerlink" href="#module-app.services.preprocessor.main" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.services.preprocessor.main.PreprocessorService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.services.preprocessor.main.</span></span><span class="sig-name descname"><span class="pre">PreprocessorService</span></span><a class="reference internal" href="_modules/app/services/preprocessor/main.html#PreprocessorService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.preprocessor.main.PreprocessorService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#app.services.preprocessor.interface.IPreprocessorService" title="app.services.preprocessor.interface.IPreprocessorService"><code class="xref py py-class docutils literal notranslate"><span class="pre">IPreprocessorService</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.preprocessor.main.PreprocessorService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/services/preprocessor/main.html#PreprocessorService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.preprocessor.main.PreprocessorService.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the preprocessor service with SofaSegmenter.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.preprocessor.main.PreprocessorService.preprocess_image">
+<span class="sig-name descname"><span class="pre">preprocess_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/app/services/preprocessor/main.html#PreprocessorService.preprocess_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.preprocessor.main.PreprocessorService.preprocess_image" title="Link to this definition"></a></dt>
+<dd><p>Preprocess an image using SofaSegmenter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image in BGR format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Preprocessed image</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If preprocessing fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-app.services.preprocessor.interface">
+<dt class="sig sig-object py" id="app.services.preprocessor.interface.IPreprocessorService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.services.preprocessor.interface.</span></span><span class="sig-name descname"><span class="pre">IPreprocessorService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/services/preprocessor/interface.html#IPreprocessorService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.preprocessor.interface.IPreprocessorService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Interface for image preprocessing service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.preprocessor.interface.IPreprocessorService.preprocess_image">
+<span class="sig-name descname"><span class="pre">preprocess_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/app/services/preprocessor/interface.html#IPreprocessorService.preprocess_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.preprocessor.interface.IPreprocessorService.preprocess_image" title="Link to this definition"></a></dt>
+<dd><p>Preprocess an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image in BGR format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Preprocessed image</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If preprocessing fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-app.services.similarity.main">
+<span id="similarity-service"></span><h3>Similarity Service<a class="headerlink" href="#module-app.services.similarity.main" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="app.services.similarity.main.SimilarityService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.services.similarity.main.</span></span><span class="sig-name descname"><span class="pre">SimilarityService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IProductRepository</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/services/similarity/main.html#SimilarityService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.main.SimilarityService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#app.services.similarity.interface.ISimilarityService" title="app.services.similarity.interface.ISimilarityService"><code class="xref py py-class docutils literal notranslate"><span class="pre">ISimilarityService</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.similarity.main.SimilarityService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_repo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IProductRepository</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/services/similarity/main.html#SimilarityService.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.main.SimilarityService.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the similarity service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>product_repo</strong> – Repository for product database operations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.similarity.main.SimilarityService.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/services/similarity/main.html#SimilarityService.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.main.SimilarityService.extract_features" title="Link to this definition"></a></dt>
+<dd><p>Extract features from an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image in BGR format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(keypoints, descriptors)</dt><dd><ul class="simple">
+<li><p>keypoints: List of color histogram features</p></li>
+<li><p>descriptors: Texture features</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If feature extraction fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.similarity.main.SimilarityService.find_most_similar">
+<span class="sig-name descname"><span class="pre">find_most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/services/similarity/main.html#SimilarityService.find_most_similar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.main.SimilarityService.find_most_similar" title="Link to this definition"></a></dt>
+<dd><p>Find the most similar product based on image features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query_features</strong> – Features of the query image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (product, similarity_score)</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If similarity search fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-app.services.similarity.interface">
+<dt class="sig sig-object py" id="app.services.similarity.interface.ISimilarityService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">app.services.similarity.interface.</span></span><span class="sig-name descname"><span class="pre">ISimilarityService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app/services/similarity/interface.html#ISimilarityService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.interface.ISimilarityService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<p>Interface for image similarity service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.similarity.interface.ISimilarityService.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/services/similarity/interface.html#ISimilarityService.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.interface.ISimilarityService.extract_features" title="Link to this definition"></a></dt>
+<dd><p>Extract features from an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image in BGR format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(keypoints, descriptors)</dt><dd><ul class="simple">
+<li><p>keypoints: List of color histogram features</p></li>
+<li><p>descriptors: Texture features</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If feature extraction fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="app.services.similarity.interface.ISimilarityService.find_most_similar">
+<span class="sig-name descname"><span class="pre">find_most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/app/services/similarity/interface.html#ISimilarityService.find_most_similar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.services.similarity.interface.ISimilarityService.find_most_similar" title="Link to this definition"></a></dt>
+<dd><p>Find the most similar product based on image features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query_features</strong> – Features of the query image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (product, similarity_score)</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If similarity search fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="core-processing">
+<h1>Core Processing<a class="headerlink" href="#core-processing" title="Link to this heading"></a></h1>
+<section id="module-app.utils.image">
+<span id="image-processing"></span><h2>Image Processing<a class="headerlink" href="#module-app.utils.image" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.utils.image.process_uploaded_image">
+<span class="sig-prename descclassname"><span class="pre">app.utils.image.</span></span><span class="sig-name descname"><span class="pre">process_uploaded_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">upload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UploadedFile</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/app/utils/image.html#process_uploaded_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.utils.image.process_uploaded_image" title="Link to this definition"></a></dt>
+<dd><p>Convert uploaded image to numpy array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>upload</strong> – Streamlit UploadedFile object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image as a numpy array in BGR format</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-src.preprocessor.main">
+<dt class="sig sig-object py" id="src.preprocessor.main.BoundingBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocessor.main.</span></span><span class="sig-name descname"><span class="pre">BoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocessor/main.html#BoundingBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.BoundingBox" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Dataclass to represent a bounding box.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.preprocessor.main.BoundingBox.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#src.preprocessor.main.BoundingBox.height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.preprocessor.main.BoundingBox.width">
+<span class="sig-name descname"><span class="pre">width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#src.preprocessor.main.BoundingBox.width" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.preprocessor.main.BoundingBox.x">
+<span class="sig-name descname"><span class="pre">x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#src.preprocessor.main.BoundingBox.x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.preprocessor.main.BoundingBox.y">
+<span class="sig-name descname"><span class="pre">y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#src.preprocessor.main.BoundingBox.y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocessor.main.</span></span><span class="sig-name descname"><span class="pre">SofaSegmenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IPreprocessor</span></code></p>
+<p>Sofa segmentation and background removal using GrabCut algorithm.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the sofa segmenter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Padding to add around the segmented sofa</p></li>
+<li><p><strong>max_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Maximum dimension size for resizing while maintaining aspect ratio</p></li>
+<li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of GrabCut iterations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If any parameters are invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter._create_initial_mask">
+<span class="sig-name descname"><span class="pre">_create_initial_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter._create_initial_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter._create_initial_mask" title="Link to this definition"></a></dt>
+<dd><p>Create initial mask for GrabCut with sofa-specific regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Image height</p></li>
+<li><p><strong>width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Image width</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Initialized mask with background/foreground regions</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter._get_bounding_box">
+<span class="sig-name descname"><span class="pre">_get_bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter._get_bounding_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter._get_bounding_box" title="Link to this definition"></a></dt>
+<dd><p>Get bounding box coordinates from the largest contour in the mask.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mask</strong> – Binary mask</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(x, y, width, height) of bounding box</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter._resize_image">
+<span class="sig-name descname"><span class="pre">_resize_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter._resize_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter._resize_image" title="Link to this definition"></a></dt>
+<dd><p>Resize image while maintaining aspect ratio if it exceeds max_size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(Resized image, scale factor)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If input image is empty or invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter._segment_sofa">
+<span class="sig-name descname"><span class="pre">_segment_sofa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#src.preprocessor.main.BoundingBox" title="src.preprocessor.main.BoundingBox"><span class="pre">BoundingBox</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter._segment_sofa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter._segment_sofa" title="Link to this definition"></a></dt>
+<dd><p>Segment sofa from image using GrabCut algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input BGR image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(Segmented image, bounding box)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, <a class="reference internal" href="#src.preprocessor.main.BoundingBox" title="src.preprocessor.main.BoundingBox">BoundingBox</a>]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If segmentation fails</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If input image is invalid</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocessor.main.SofaSegmenter.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/src/preprocessor/main.html#SofaSegmenter.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocessor.main.SofaSegmenter.preprocess" title="Link to this definition"></a></dt>
+<dd><p>Preprocess sofa image using GrabCut-based segmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> – Input BGR image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Processed image with background removed and cropped</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – If critical processing error occurs</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.feature_extractor.main">
+<span id="feature-extraction"></span><h2>Feature Extraction<a class="headerlink" href="#module-src.feature_extractor.main" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.feature_extractor.main.</span></span><span class="sig-name descname"><span class="pre">ColorHistogramExtractor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hist_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IFeatureExtractor</span></code></p>
+<p>Color Histogram and Texture feature extractor implementation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hist_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Color Histogram extractor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hist_bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – Number of bins for the color histogram</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If hist_bins is less than or equal to 0</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor._compute_glcm">
+<span class="sig-name descname"><span class="pre">_compute_glcm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gray_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">0.7853981633974483,</span> <span class="pre">1.5707963267948966,</span> <span class="pre">2.356194490192345]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor._compute_glcm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_glcm" title="Link to this definition"></a></dt>
+<dd><p>Compute Gray Level Co-occurrence Matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gray_image</strong> – Grayscale image</p></li>
+<li><p><strong>distances</strong> – List of pixel pair distances</p></li>
+<li><p><strong>angles</strong> – List of pixel pair angles</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GLCM matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor._compute_glcm_features">
+<span class="sig-name descname"><span class="pre">_compute_glcm_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">glcm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor._compute_glcm_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_glcm_features" title="Link to this definition"></a></dt>
+<dd><p>Compute features from GLCM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>glcm</strong> – Gray Level Co-occurrence Matrix</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of GLCM features</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor._compute_pair_similarity">
+<span class="sig-name descname"><span class="pre">_compute_pair_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor._compute_pair_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor._compute_pair_similarity" title="Link to this definition"></a></dt>
+<dd><p>Compute similarity between two feature sets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features1</strong> – Tuple of (color_hist1, texture_features1)</p></li>
+<li><p><strong>features2</strong> – Tuple of (color_hist2, texture_features2)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Similarity score between 0 and 1</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If features are invalid or incompatible</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – If features are not tuples</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor._cosine_similarity">
+<span class="sig-name descname"><span class="pre">_cosine_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor._cosine_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor._cosine_similarity" title="Link to this definition"></a></dt>
+<dd><p>Calculate cosine similarity between two vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v1</strong> – First vector</p></li>
+<li><p><strong>v2</strong> – Second vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cosine similarity</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If vectors have different shapes or are empty</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – If inputs are not numpy arrays</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor.compute_similarity_matrix">
+<span class="sig-name descname"><span class="pre">compute_similarity_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor.compute_similarity_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor.compute_similarity_matrix" title="Link to this definition"></a></dt>
+<dd><p>Compute pairwise similarity matrix between all feature pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>features_list</strong> – List of feature tuples, each containing (color_hist, texture_features)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Similarity matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If features_list is empty or contains invalid features</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – If features_list is not a list</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor.extract_features" title="Link to this definition"></a></dt>
+<dd><p>Extract color histogram and texture features from an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – Input image as a numpy array (BGR format)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(keypoints, descriptors)</dt><dd><ul class="simple">
+<li><p>keypoints: Color histogram features</p></li>
+<li><p>descriptors: Texture features</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If image is None, empty, or not a valid numpy array</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – If image is not a numpy array</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.feature_extractor.main.ColorHistogramExtractor.find_most_similar">
+<span class="sig-name descname"><span class="pre">find_most_similar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/feature_extractor/main.html#ColorHistogramExtractor.find_most_similar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.feature_extractor.main.ColorHistogramExtractor.find_most_similar" title="Link to this definition"></a></dt>
+<dd><p>Find the most similar features from a database of features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query_features</strong> – Tuple of (color_hist, texture_features) for query image</p></li>
+<li><p><strong>database_features</strong> – List of feature tuples for database images</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>(index, similarity_score)</dt><dd><ul class="simple">
+<li><p>index: Index of most similar features in database_features</p></li>
+<li><p>similarity_score: Similarity score of the best match</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.13)"><strong>ValueError</strong></a> – If database_features is empty or features are invalid</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.13)"><strong>TypeError</strong></a> – If inputs are of incorrect type</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="database-layer">
+<h1>Database Layer<a class="headerlink" href="#database-layer" title="Link to this heading"></a></h1>
+<section id="module-src.db.models.product">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-src.db.models.product" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.db.models.product.Product">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.db.models.product.</span></span><span class="sig-name descname"><span class="pre">Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/db/models/product.html#Product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.models.product.Product" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#src.db.models.product.Product.created_at" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#src.db.models.product.Product.description" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.features_file_path">
+<span class="sig-name descname"><span class="pre">features_file_path</span></span><a class="headerlink" href="#src.db.models.product.Product.features_file_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#src.db.models.product.Product.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.processed_file_path">
+<span class="sig-name descname"><span class="pre">processed_file_path</span></span><a class="headerlink" href="#src.db.models.product.Product.processed_file_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.product_id">
+<span class="sig-name descname"><span class="pre">product_id</span></span><a class="headerlink" href="#src.db.models.product.Product.product_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.raw_file_path">
+<span class="sig-name descname"><span class="pre">raw_file_path</span></span><a class="headerlink" href="#src.db.models.product.Product.raw_file_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.db.models.product.Product.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#src.db.models.product.Product.updated_at" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.db.repos.product.product">
+<span id="repositories"></span><h2>Repositories<a class="headerlink" href="#module-src.db.repos.product.product" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.db.repos.product.product.</span></span><span class="sig-name descname"><span class="pre">ProductRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IProductRepository</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.create" title="Link to this definition"></a></dt>
+<dd><p>Create a new product.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete a product by its ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.get_all" title="Link to this definition"></a></dt>
+<dd><p>Get all products.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Get a product by its ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Get products by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.repos.product.product.ProductRepository.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">product</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.db.models.product.Product" title="src.db.models.product.Product"><span class="pre">Product</span></a></span></span><a class="reference internal" href="_modules/src/db/repos/product/product.html#ProductRepository.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.repos.product.product.ProductRepository.update" title="Link to this definition"></a></dt>
+<dd><p>Update an existing product.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.db.provider.main">
+<span id="database-provider"></span><h2>Database Provider<a class="headerlink" href="#module-src.db.provider.main" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.db.provider.main.SQLiteDatabaseProvider">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.db.provider.main.</span></span><span class="sig-name descname"><span class="pre">SQLiteDatabaseProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sqlite:///./products.db'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/db/provider/main.html#SQLiteDatabaseProvider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.provider.main.SQLiteDatabaseProvider" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IDatabaseProvider</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.provider.main.SQLiteDatabaseProvider.close_session">
+<span class="sig-name descname"><span class="pre">close_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/src/db/provider/main.html#SQLiteDatabaseProvider.close_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.provider.main.SQLiteDatabaseProvider.close_session" title="Link to this definition"></a></dt>
+<dd><p>Close the current database session</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.provider.main.SQLiteDatabaseProvider.get_session">
+<span class="sig-name descname"><span class="pre">get_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Session</span></span></span><a class="reference internal" href="_modules/src/db/provider/main.html#SQLiteDatabaseProvider.get_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.provider.main.SQLiteDatabaseProvider.get_session" title="Link to this definition"></a></dt>
+<dd><p>Get a database session</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.db.provider.main.SQLiteDatabaseProvider.initialize_database">
+<span class="sig-name descname"><span class="pre">initialize_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/src/db/provider/main.html#SQLiteDatabaseProvider.initialize_database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.provider.main.SQLiteDatabaseProvider.initialize_database" title="Link to this definition"></a></dt>
+<dd><p>Create all tables in the database</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.db.provider.main.get_database_provider">
+<span class="sig-prename descclassname"><span class="pre">src.db.provider.main.</span></span><span class="sig-name descname"><span class="pre">get_database_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'sqlite:///./products.db'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">IDatabaseProvider</span></span></span><a class="reference internal" href="_modules/src/db/provider/main.html#get_database_provider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.db.provider.main.get_database_provider" title="Link to this definition"></a></dt>
+<dd><p>Get the singleton instance of the database provider</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
