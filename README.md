@@ -163,7 +163,8 @@ test(preprocessor): add unit tests for image segmentation
 
 1. Ensure tests pass: `python manage.py test`
 2. Update documentation if needed
-3. Submit a pull request
+3. Run isort and black in the root directory to ensure proper formatting (PEP8)
+4. Submit a pull request
 
 ## License
 
